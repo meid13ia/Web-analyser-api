@@ -1,0 +1,16 @@
+{
+  "name": "web-check-mcp",
+  "version": "1.0.0",
+  "description": "MCP server equivalent of web-check - OSINT tool for analysing any website",
+  "type": "module",
+  "main": "index.js",
+  "bin": {
+    "web-check-mcp": "./index.js"
+  },
+  "scripts": {
+    "start": "node index.js"
+  },
+  "dependencies": {
+    "@modelcontextprotocol/sdk": "^1.0.0"
+  }
+}
