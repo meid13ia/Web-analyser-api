@@ -1,0 +1,14 @@
+{
+  "name": "web-check-api",
+  "version": "1.0.0",
+  "description": "OSINT API for analysing any website - equivalent of web-check",
+  "type": "module",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js",
+    "dev": "node --watch server.js"
+  },
+  "engines": {
+    "node": ">=18.0.0"
+  }
+}
