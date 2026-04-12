@@ -6,6 +6,10 @@ import tls from "tls";
 import { promisify } from "util";
 import { URL } from "url";
 import crypto from "crypto";
+import dotenv from "dotenv";
+
+// Load environment variables from .env file
+dotenv.config();
 
 // ─── Configuration ────────────────────────────────────────────────────────────
 
@@ -31,6 +35,9 @@ const CONFIG = {
 
   // Domaines / IPs qu'on refuse d'analyser
   BLOCKED_TARGETS: (process.env.BLOCKED_TARGETS || "").split(",").filter(Boolean),
+
+  // Clé API pour l'authentification
+  API_KEY: process.env.API_KEY || "default-secret-key",
 };
 
 // ─── Logging structuré ────────────────────────────────────────────────────────
@@ -606,6 +613,13 @@ const server = http.createServer(async (req, res) => {
   if (req.method !== "GET") {
     res.writeHead(405, { "Content-Type": "application/json" });
     return res.end(JSON.stringify({ error: "Méthode non autorisée. Utilise GET." }));
+  }
+
+  // ── Vérification de la clé API ──
+  const apiKey = req.headers["x-api-key"] || url.searchParams.get("api_key");
+  if (!apiKey || apiKey !== CONFIG.API_KEY) {
+    res.writeHead(401, { "Content-Type": "application/json" });
+    return res.end(JSON.stringify({ error: "Clé API manquante ou invalide." }));
   }
 
   const url = new URL(req.url, `http://localhost:${CONFIG.PORT}`);
