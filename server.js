@@ -37,7 +37,7 @@ const CONFIG = {
   BLOCKED_TARGETS: (process.env.BLOCKED_TARGETS || "").split(",").filter(Boolean),
 
   // Clé API pour l'authentification
-  API_KEY: process.env.API_KEY || "default-secret-key",
+  API_KEY: process.env.API_KEY || "",
 };
 
 // ─── Logging structuré ────────────────────────────────────────────────────────

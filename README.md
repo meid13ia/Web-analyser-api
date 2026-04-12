@@ -127,9 +127,33 @@ curl "http://localhost:3000/analyse?url=https://example.com&api_key=default-secr
 ### Error Handling
 The API returns appropriate HTTP status codes and error messages for various scenarios:
 - `400 Bad Request`: Missing or invalid URL parameter.
+- `401 Unauthorized`: Missing or invalid API key.
 - `403 Forbidden`: The target is blocked.
 - `429 Too Many Requests`: Rate limit exceeded.
 - `500 Internal Server Error`: Server-side error.
+
+### Security Recommendations
+
+1. **API Key Management**:
+   - Always use a strong, unique API key in production.
+   - Never commit the API key to version control. Use environment variables or a secrets management service.
+   - Rotate the API key regularly.
+
+2. **Environment Variables**:
+   - Use `.env` files to store sensitive information like API keys and database credentials.
+   - Add `.env` to your `.gitignore` file to prevent it from being committed to the repository.
+
+3. **Rate Limiting**:
+   - Configure `RATE_LIMIT_MAX` and `RATE_LIMIT_WINDOW_MS` to protect against brute force attacks.
+   - Use `TRUSTED_IPS` to whitelist specific IPs that can bypass rate limits.
+
+4. **Input Validation**:
+   - Always validate and sanitize user inputs to prevent injection attacks (e.g., SQL injection, XSS).
+   - Use libraries like `validator` or `joi` for input validation.
+
+5. **Dependencies**:
+   - Regularly update dependencies to patch known vulnerabilities.
+   - Use `npm audit` to check for vulnerabilities in your dependencies.
 
 ## Docker Support
 
